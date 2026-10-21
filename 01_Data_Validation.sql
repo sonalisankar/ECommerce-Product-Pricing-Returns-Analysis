@@ -1,0 +1,28 @@
+USE EcommerceAnalytics;
+GO
+
+SELECT COUNT_BIG(*) AS TotalRows
+FROM dbo.EcommerceRaw;
+GO
+
+SELECT TOP (10) *
+FROM dbo.EcommerceRaw;
+GO
+
+SELECT
+    SUM(CASE WHEN Product_ID IS NULL THEN 1 ELSE 0 END) AS MissingProductID,
+    SUM(CASE WHEN Product_Name IS NULL THEN 1 ELSE 0 END) AS MissingProductName,
+    SUM(CASE WHEN Category IS NULL THEN 1 ELSE 0 END) AS MissingCategory,
+    SUM(CASE WHEN Price IS NULL THEN 1 ELSE 0 END) AS MissingPrice,
+    SUM(CASE WHEN Discount IS NULL THEN 1 ELSE 0 END) AS MissingDiscount,
+    SUM(CASE WHEN Shipping_Cost IS NULL THEN 1 ELSE 0 END) AS MissingShippingCost,
+    SUM(CASE WHEN Return_Rate IS NULL THEN 1 ELSE 0 END) AS MissingReturnRate
+FROM dbo.EcommerceRaw;
+GO
+
+SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH,
+       NUMERIC_PRECISION, NUMERIC_SCALE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'EcommerceRaw'
+ORDER BY ORDINAL_POSITION;
+GO
